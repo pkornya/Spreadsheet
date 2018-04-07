@@ -1,7 +1,8 @@
+#include "mainwindow.h"
 #include <QApplication>
 #include <QSplashScreen>
 #include <QPixmap>
-#include "mainwindow.h"
+#include <QSplashScreen>
 
 int main(int argc, char *argv[])
 {

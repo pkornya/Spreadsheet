@@ -1,5 +1,6 @@
 #include "cell.h"
 #include "spreadsheet.h"
+
 #include <QFile>
 #include <QDataStream>
 #include <QIODevice>
@@ -7,7 +8,7 @@
 #include <QApplication>
 #include <QClipboard>
 
-Spreadsheet::Spreadsheet(QWidget *parent)
+Spreadsheet::Spreadsheet(QWidget *parent)   // OK
     : QTableWidget(parent)
 {
     autoRecalc = true;
@@ -21,7 +22,7 @@ Spreadsheet::Spreadsheet(QWidget *parent)
     clear();
 }
 
-void Spreadsheet::clear()
+void Spreadsheet::clear()   //OK
 {
     setRowCount(0);
     setColumnCount(0);
@@ -37,34 +38,26 @@ void Spreadsheet::clear()
     setCurrentCell(0, 0);
 }
 
-Cell *Spreadsheet::cell(int row, int column) const
+Cell *Spreadsheet::getCell(int row, int column) const   // OK
 {
     return static_cast<Cell *>(item(row, column));
 }
 
-QString Spreadsheet::text(int row, int column) const
+QString Spreadsheet::text(int row, int column) const    // OK
 {
-    Cell *c = cell(row, column);
-    if (c) {
-        return c->text();
-    } else {
-        return "";
-    }
+    Cell *c = getCell(row, column);
+    return c ? c->text() : "";
 }
 
-QString Spreadsheet::formula(int row, int column) const
+QString Spreadsheet::formula(int row, int column) const // OK
 {
-    Cell *c = cell(row, column);
-    if (c) {
-        return c->formula();
-    } else {
-        return "";
-    }
+    Cell *c = getCell(row, column);
+    return c ? c->formula() : "";
 }
 
-void Spreadsheet::setFormula(int row, int column, const QString &formula)
+void Spreadsheet::setFormula(int row, int column, const QString &formula) // OK
 {
-    Cell *c = cell(row, column);
+    Cell *c = getCell(row, column);
     if (!c) {
         c = new Cell;
         setItem(row, column, c);
@@ -72,25 +65,25 @@ void Spreadsheet::setFormula(int row, int column, const QString &formula)
     c->setFormula(formula);
 }
 
-QString Spreadsheet::currentLocation() const
+QString Spreadsheet::currentLocation() const    // OK
 {
     return QChar('A' + currentColumn())
             + QString::number(currentRow() + 1);
 }
 
-QString Spreadsheet::currentFormula() const
+QString Spreadsheet::currentFormula() const // OK
 {
     return formula(currentRow(), currentColumn());
 }
 
-void Spreadsheet::somethingChanged()
+void Spreadsheet::somethingChanged()    // OK
 {
     if (autoRecalc)
         recalculate();
     emit modified();
 }
 
-bool Spreadsheet::writeFile(const QString &fileName)
+bool Spreadsheet::writeFile(const QString &fileName)    // OK
 {
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -102,26 +95,26 @@ bool Spreadsheet::writeFile(const QString &fileName)
     }
 
     QDataStream out(&file);
-    out.setVersion(QDataStream::Qt_4_1);
+    //out.setVersion(QDataStream::Qt_DefaultCompiledVersion);
 
-    out << quint32(MagicNumber);
+    //out << quint32(MagicNumber);
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
     for (int row = 0; row < RowCount; ++row) {
         for (int column = 0; column < ColumnCount; ++column) {
             QString str = formula(row, column);
             if (!str.isEmpty())
-                out << quint16(row) << quint16(column) << str;
+                out << row << column << str;
         }
     }
     QApplication::restoreOverrideCursor();
     return true;
 }
 
-bool Spreadsheet::readFile(const QString &fileName)
+bool Spreadsheet::readFile(const QString &fileName) //OK
 {
     QFile file(fileName);
-    if (file.open(QIODevice::ReadOnly)) {
+    if (!file.open(QIODevice::ReadOnly)) {
         QMessageBox::warning(this, tr("Spreadsheet"),
                              tr("Cannot read file %1:\n%2")
                              .arg(file.fileName())
@@ -130,20 +123,22 @@ bool Spreadsheet::readFile(const QString &fileName)
     }
 
     QDataStream in(&file);
-    in.setVersion(QDataStream::Qt_4_1);
+    //in.setVersion(QDataStream::Qt_DefaultCompiledVersion);
 
-    quint32 magic;
-    in >> magic;
-    if (magic != MagicNumber) {
-        QMessageBox::warning(this, tr("Spreadsheet"),
-                             tr("The file is not a Spreadsheet file."));
-        return false;
-    }
+//    quint32 magic;
+//    in >> magic;
+//    if (magic != MagicNumber) {
+//        QMessageBox::warning(this, tr("Spreadsheet"),
+//                             tr("The file is not a Spreadsheet file."));
+//        return false;
+//    }
 
     clear();
 
-    quint16 row;
-    quint16 column;
+//    quint16 row;
+//    quint16 column;
+    int row;
+    int column;
     QString str;
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -155,13 +150,13 @@ bool Spreadsheet::readFile(const QString &fileName)
     return true;
 }
 
-void Spreadsheet::cut()
+void Spreadsheet::cut() // OK
 {
     copy();
     del();
 }
 
-void Spreadsheet::copy()
+void Spreadsheet::copy()    // OK
 {
     QTableWidgetSelectionRange range = selectedRange();
 
@@ -177,10 +172,9 @@ void Spreadsheet::copy()
         }
     }
     QApplication::clipboard()->setText(str);
-
 }
 
-QTableWidgetSelectionRange Spreadsheet::selectedRange() const
+QTableWidgetSelectionRange Spreadsheet::selectedRange() const   // OK
 {
     QList<QTableWidgetSelectionRange> ranges = selectedRanges();
     if (ranges.isEmpty())
@@ -188,7 +182,7 @@ QTableWidgetSelectionRange Spreadsheet::selectedRange() const
     return ranges.first();
 }
 
-void Spreadsheet::paste()
+void Spreadsheet::paste()   // OK
 {
     QTableWidgetSelectionRange range = selectedRange();
     QString str = QApplication::clipboard()->text();
@@ -217,24 +211,25 @@ void Spreadsheet::paste()
     somethingChanged();
 }
 
-void Spreadsheet::del()
+void Spreadsheet::del() // OK
 {
     foreach (QTableWidgetItem *item, selectedItems()) {
        delete item;
     }
 }
 
-void Spreadsheet::selectCurrentRow()
+void Spreadsheet::selectCurrentRow()    // OK
 {
     selectRow(currentRow());
 }
 
-void Spreadsheet::selectCurrentColumn()
+void Spreadsheet::selectCurrentColumn() // OK
 {
     selectColumn(currentColumn());
 }
 
-void Spreadsheet::findNext(const QString &str, Qt::CaseSensitivity cs)
+// Fucking shit
+void Spreadsheet::findNext(const QString& str, Qt::CaseSensitivity cs)
 {
     int row = currentRow();
     int column = currentColumn() + 1;
@@ -255,6 +250,7 @@ void Spreadsheet::findNext(const QString &str, Qt::CaseSensitivity cs)
     QApplication::beep();
 }
 
+// Fucking shit
 void Spreadsheet::findPrevious(const QString &str, Qt::CaseSensitivity cs)
 {
 
@@ -281,8 +277,8 @@ void Spreadsheet::recalculate()
 {
     for (int row = 0; row < RowCount; ++row) {
         for (int column = 0; column < ColumnCount; ++column) {
-            if (cell(row, column))
-                cell(row, column)->setDirty();
+            if (getCell(row, column))
+                getCell(row, column)->setDirty();
         }
     }
     viewport()->update();
@@ -308,7 +304,8 @@ void Spreadsheet::sort(const SpreadsheetCompare &compare)
                                range.leftColumn() + j));
     }
 
-    qStableSort(rows.begin(), rows.end(), compare);
+    //qStableSort(rows.begin(), rows.end(), compare);
+    std::sort(rows.begin(), rows.end(), compare);
 
     for (i = 0; i < range.rowCount(); ++i) {
         for (int j = 0; j < range.columnCount(); ++j)
@@ -337,4 +334,3 @@ bool SpreadsheetCompare::operator ()(const QStringList &row1,
     }
     return false;
 }
-

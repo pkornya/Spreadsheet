@@ -14,6 +14,7 @@ public:
     void setFormula(const QString &formula);
     QString formula() const;
     void setDirty();
+
 private:
     QVariant value() const;
     QVariant evalExpression(const QString &str, int &pos) const;

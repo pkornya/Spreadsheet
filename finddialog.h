@@ -22,10 +22,10 @@ private slots:
     void enableFindButton(const QString &text);
 
 private:
-    QLabel *label;
-    QLineEdit *lineEdit;
-    QCheckBox *caseCheckBox;
-    QCheckBox *backwardCheckBox;
+    QLabel      *label;
+    QLineEdit   *lineEdit;
+    QCheckBox   *caseCheckBox;
+    QCheckBox   *backwardCheckBox;
     QPushButton *findButton;
     QPushButton *closeButton;
 };
