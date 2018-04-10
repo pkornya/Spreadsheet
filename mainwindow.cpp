@@ -53,25 +53,29 @@ void MainWindow::createActions()    // OK
     newAction->setIcon(QIcon(":/pictures/logo/new.png"));
     newAction->setShortcut(tr("Ctrl+N"));
     newAction->setStatusTip(tr("Create a new spreadsheet file"));
-    connect(newAction, SIGNAL(triggered()), this, SLOT(newFile()));
+    connect(newAction, SIGNAL(triggered()),
+            this, SLOT(newFile()));
 
     openAction = new QAction(tr("&Open"), this);
     openAction->setIcon(QIcon(":/pictures/logo/open.png"));
     openAction->setShortcut(tr("Ctrl+M"));
     openAction->setStatusTip(tr("Open a new spreadsheet file"));
-    connect(openAction, SIGNAL(triggered()), this, SLOT(open()));
+    connect(openAction, SIGNAL(triggered()),
+            this, SLOT(open()));
 
     saveAction = new QAction(tr("&Save"), this);
     saveAction->setIcon(QIcon(":/pictures/logo/save.png"));
     saveAction->setShortcut(tr("Ctrl+S"));
     saveAction->setStatusTip(tr("Save a new spreadsheet file"));
-    connect(saveAction, SIGNAL(triggered()), this, SLOT(save()));
+    connect(saveAction, SIGNAL(triggered()),
+            this, SLOT(save()));
 
     saveAsAction = new QAction(tr("&SaveAs"), this);
     saveAsAction->setIcon(QIcon(":/pictures/logo/saveAs.png"));
     saveAsAction->setShortcut(tr("Ctrl+T"));
     saveAsAction->setStatusTip(tr("Save As a new spreadsheet file"));
-    connect(saveAsAction, SIGNAL(triggered()), this, SLOT(saveAs()));
+    connect(saveAsAction, SIGNAL(triggered()),
+            this, SLOT(saveAs()));
 
     for (int i = 0; i < MaxRecentFiles; ++i) {
         recentFileActions[i] = new QAction(this);
@@ -95,12 +99,14 @@ void MainWindow::createActions()    // OK
 
     aboutQtAction = new QAction(tr("About &Qt"), this);
     aboutQtAction->setStatusTip(tr("Show the Qt library’s About box"));
-    connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    connect(aboutQtAction, SIGNAL(triggered()),
+            qApp, SLOT(aboutQt()));
 
     closeAction = new QAction(tr("&Close"), this);
     closeAction->setShortcut(tr("Ctrl+W"));
     closeAction->setStatusTip(tr("Close this window"));
-    connect(closeAction, SIGNAL(triggered()), this, SLOT(close()));
+    connect(closeAction, SIGNAL(triggered()),
+            this, SLOT(close()));
 
     exitAction = new QAction(tr("&Exit"), this);
     exitAction->setIcon(QIcon(":/pictures/logo/exit.png"));
@@ -112,28 +118,34 @@ void MainWindow::createActions()    // OK
     cutAction = new QAction(tr("&Cut"), this);
     cutAction->setIcon(QIcon(":/pictures/logo/cut.png"));
     cutAction->setShortcut(tr("Ctrl+X"));
-    connect(cutAction, SIGNAL(triggered(bool)), spreadsheet, SLOT(cut()));
+    connect(cutAction, SIGNAL(triggered(bool)),
+            spreadsheet, SLOT(cut()));
 
     copyAction = new QAction(tr("&Copy"), this);
     copyAction->setIcon(QIcon(":/pictures/logo/copy.png"));
     copyAction->setShortcut(tr("Ctrl+C"));
-    connect(copyAction, SIGNAL(triggered(bool)), spreadsheet, SLOT(copy()));
+    connect(copyAction, SIGNAL(triggered(bool)),
+            spreadsheet, SLOT(copy()));
 
     pasteAction = new QAction(tr("&Paste"), this);
     pasteAction->setIcon(QIcon(":/pictures/logo/paste.png"));
     pasteAction->setShortcut(tr("Ctrl+V"));
-    connect(pasteAction, SIGNAL(triggered(bool)), spreadsheet, SLOT(paste()));
+    connect(pasteAction, SIGNAL(triggered(bool)),
+            spreadsheet, SLOT(paste()));
 
     deleteAction = new QAction(tr("&Delete"), this);
     deleteAction->setIcon(QIcon(":/pictures/logo/delete.png"));
     deleteAction->setShortcut(tr("Delete"));
-    connect(deleteAction, SIGNAL(triggered(bool)), spreadsheet, SLOT(del()));
+    connect(deleteAction, SIGNAL(triggered(bool)),
+            spreadsheet, SLOT(del()));
 
     selectRowAction = new QAction(tr("&SelectRow"), this);
-    connect(selectRowAction, SIGNAL(triggered(bool)), spreadsheet, SLOT(selectCurrentRow()));
+    connect(selectRowAction, SIGNAL(triggered(bool)),
+            spreadsheet, SLOT(selectCurrentRow()));
 
     selectColumnAction = new QAction(tr("&SelectColumn"), this);
-    connect(selectColumnAction, SIGNAL(triggered(bool)), spreadsheet, SLOT(selectCurrentColumn()));
+    connect(selectColumnAction, SIGNAL(triggered(bool)),
+            spreadsheet, SLOT(selectCurrentColumn()));
 
     findAction = new QAction(tr("&Find"), this);
     findAction->setIcon(QIcon(":/pictures/logo/find.png"));
@@ -144,22 +156,27 @@ void MainWindow::createActions()    // OK
     goToCellAction = new QAction(tr("&GoToCell"), this);
     goToCellAction->setIcon(QIcon(":/pictures/logo/gotocell.png"));
     goToCellAction->setStatusTip(tr("Go To Cell"));
-    connect(goToCellAction, SIGNAL(triggered(bool)), this, SLOT(goToCell()));
+    connect(goToCellAction, SIGNAL(triggered(bool)),
+            this, SLOT(goToCell()));
 
     recalculateAction = new QAction(tr("&Recalculate"), this);
-    connect(recalculateAction, SIGNAL(triggered(bool)), spreadsheet, SLOT(recalculate()));
+    connect(recalculateAction, SIGNAL(triggered(bool)),
+            spreadsheet, SLOT(recalculate()));
 
     sortAction = new QAction(tr("&Sort"), this);
     sortAction->setStatusTip(tr("Sort"));
-    connect(sortAction, SIGNAL(triggered(bool)), this, SLOT(sort()));
+    connect(sortAction, SIGNAL(triggered(bool)),
+            this, SLOT(sort()));
 
     autoRecalcAction = new QAction(tr("&Auto-Recalculate"), this);
     //autoRecalcAction->setCheckable(true);
-    connect(autoRecalcAction, SIGNAL(triggered(bool)), spreadsheet, SLOT(setAutoRecalculate(bool)));
+    connect(autoRecalcAction, SIGNAL(triggered(bool)),
+            spreadsheet, SLOT(setAutoRecalculate(bool)));
 
     aboutAction = new QAction(tr("&About"), this);
     aboutAction->setStatusTip(tr("Brief information about program"));
-    connect(aboutAction, SIGNAL(triggered(bool)), this, SLOT(about()));
+    connect(aboutAction, SIGNAL(triggered(bool)),
+            this, SLOT(about()));
 }
 
 void MainWindow::createMenus()  // OK
@@ -303,9 +320,10 @@ bool MainWindow::okToContinue() // OK
 void MainWindow::open()
 {
     if(okToContinue()) {
+        QString filter = tr("Spreadsheet files (*.sp)");
         QString fileName = QFileDialog::getOpenFileName(this,
                                    tr("Open Spreadsheet"), ".",
-                                   tr("Spreadsheet files (*.sp)"));
+                                   filter);
         if (!fileName.isEmpty())
             loadFile(fileName);
     }

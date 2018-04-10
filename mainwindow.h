@@ -56,41 +56,42 @@ private:
 
     enum { MaxRecentFiles = 5 };
 
-    QAction     *recentFileActions[MaxRecentFiles];
-    QAction     *separatorAction;
     QMenu       *fileMenu;
     QMenu       *editMenu;
-
-    QToolBar    *fileToolBar;
-    QToolBar    *editToolBar;
-    QAction     *newAction;
-    QAction     *openAction;
-    QAction     *saveAction;
-    QAction     *saveAsAction;
-
-    //Created
-    QAction     *selectAllAction;
-    QAction     *showGridAction;
-    QAction     *exitAction;
-    QAction     *cutAction;
-    QAction     *copyAction;
-    QAction     *pasteAction;
-    QAction     *deleteAction;
-    QAction     *findAction;
-    QAction     *goToCellAction;
-    QAction     *selectRowAction;
-    QAction     *selectColumnAction;
-    QAction     *recalculateAction;
-    QAction     *sortAction;
-    QAction     *autoRecalcAction;
-    QAction     *aboutAction;
-    QAction     *closeAction;
-
     QMenu       *selectSubMenu;
     QMenu       *toolsMenu;
     QMenu       *optionsMenu;
     QMenu       *helpMenu;
 
+    QToolBar    *fileToolBar;
+    QToolBar    *editToolBar;
+
+    QAction     *recentFileActions[MaxRecentFiles];
+    QAction     *separatorAction;
+
+    QAction     *newAction;
+    QAction     *openAction;
+    QAction     *saveAction;
+    QAction     *saveAsAction;
+    QAction     *closeAction;
+    QAction     *exitAction;
+
+    QAction     *cutAction;
+    QAction     *copyAction;
+    QAction     *pasteAction;
+    QAction     *deleteAction;
+    QAction     *selectRowAction;
+    QAction     *selectColumnAction;
+    QAction     *selectAllAction;
+    QAction     *findAction;
+    QAction     *goToCellAction;
+
+    QAction     *recalculateAction;
+    QAction     *sortAction;
+    QAction     *showGridAction;
+    QAction     *autoRecalcAction;
+
+    QAction     *aboutAction;
     QAction     *aboutQtAction;
 };
 

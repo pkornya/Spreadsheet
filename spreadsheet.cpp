@@ -95,9 +95,7 @@ bool Spreadsheet::writeFile(const QString &fileName)    // OK
     }
 
     QDataStream out(&file);
-    //out.setVersion(QDataStream::Qt_DefaultCompiledVersion);
-
-    //out << quint32(MagicNumber);
+    out.setVersion(QDataStream::Qt_5_8);
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
     for (int row = 0; row < RowCount; ++row) {
@@ -123,22 +121,12 @@ bool Spreadsheet::readFile(const QString &fileName) //OK
     }
 
     QDataStream in(&file);
-    //in.setVersion(QDataStream::Qt_DefaultCompiledVersion);
-
-//    quint32 magic;
-//    in >> magic;
-//    if (magic != MagicNumber) {
-//        QMessageBox::warning(this, tr("Spreadsheet"),
-//                             tr("The file is not a Spreadsheet file."));
-//        return false;
-//    }
+    in.setVersion(QDataStream::Qt_5_8);
 
     clear();
 
-//    quint16 row;
-//    quint16 column;
-    int row;
-    int column;
+    quint32 row;
+    quint32 column;
     QString str;
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -146,6 +134,7 @@ bool Spreadsheet::readFile(const QString &fileName) //OK
         in >> row >> column >> str;
         setFormula(row, column, str);
     }
+
     QApplication::restoreOverrideCursor();
     return true;
 }

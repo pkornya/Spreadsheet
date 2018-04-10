@@ -41,7 +41,7 @@ private slots:
     void somethingChanged();
 
 private:
-    enum { MagicNumber = 0x7F51C883, RowCount = 999, ColumnCount = 26 };
+    enum { RowCount = 999, ColumnCount = 26 };
     Cell    *getCell(int row, int column) const;
     QString text(int row, int column) const;
     QString formula(int row, int column) const;
