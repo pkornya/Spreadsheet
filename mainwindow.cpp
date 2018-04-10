@@ -17,7 +17,7 @@
 #include <QFileInfo>
 #include <QTableWidgetSelectionRange>
 #include <QSettings>
-#include <QMutableStringListIterator>
+#include <QMutableListIterator>
 #include <QDebug>
 
 MainWindow::MainWindow()    //OK
@@ -40,10 +40,10 @@ MainWindow::MainWindow()    //OK
 
     setAttribute(Qt::WA_DeleteOnClose);
 
-    /*foreach (QWidget *win, QApplication::topLevelWidgets()) {
+    foreach (QWidget *win, QApplication::topLevelWidgets()) {
         if (MainWindow *mainWin = qobject_cast<MainWindow *>(win))
             mainWin->updateRecentFileActions(); 
-    }*/
+    }
     // Write the same code for ShowGrid and Auto-Recalculate
 }
 
@@ -317,7 +317,7 @@ bool MainWindow::okToContinue() // OK
     return true;
 }
 
-void MainWindow::open()
+void MainWindow::open() // OK
 {
     if(okToContinue()) {
         QString filter = tr("Spreadsheet files (*.sp)");
@@ -329,7 +329,7 @@ void MainWindow::open()
     }
 }
 
-bool MainWindow::loadFile(const QString &fileName)
+bool MainWindow::loadFile(const QString &fileName)  // OK
 {
     if (!spreadsheet->readFile(fileName)) {
         statusBar()->showMessage(tr("Loading cancelled"), 2000);
@@ -341,7 +341,7 @@ bool MainWindow::loadFile(const QString &fileName)
     return true;
 }
 
-bool MainWindow::save()
+bool MainWindow::save() // OK
 {
     if(curFile.isEmpty()) {
         return saveAs();
@@ -350,7 +350,7 @@ bool MainWindow::save()
     }
 }
 
-bool MainWindow::saveFile(const QString &fileName)
+bool MainWindow::saveFile(const QString &fileName)  // OK
 {
     if (!spreadsheet->writeFile(fileName)) {
         statusBar()->showMessage(tr("Saving canceled"), 2000);
@@ -362,7 +362,7 @@ bool MainWindow::saveFile(const QString &fileName)
     return true;
 }
 
-bool MainWindow::saveAs()
+bool MainWindow::saveAs()   // OK
 {
     QString fileName = QFileDialog::getSaveFileName(this,
                                 tr("Save Spreadsheet"), ".",
@@ -373,7 +373,7 @@ bool MainWindow::saveAs()
     return saveFile(fileName);
 }
 
-void MainWindow::setCurrentFile(const QString &fileName)
+void MainWindow::setCurrentFile(const QString &fileName)    // OK
 {
     curFile = fileName;
     setWindowModified(false);
@@ -389,14 +389,14 @@ void MainWindow::setCurrentFile(const QString &fileName)
                                    .arg(tr("Spreadsheet")));
 }
 
-QString MainWindow::strippedName(const QString &fullFileName)
+QString MainWindow::strippedName(const QString &fullFileName)   // OK
 {
     return QFileInfo(fullFileName).fileName();
 }
 
-void MainWindow::updateRecentFileActions()
+void MainWindow::updateRecentFileActions()  // OK
 {
-    QMutableStringListIterator i(recentFiles);
+    QMutableListIterator<QString> i(recentFiles);
     while (i.hasNext()) {
         if (!QFile::exists(i.next()))
             i.remove();
@@ -404,9 +404,12 @@ void MainWindow::updateRecentFileActions()
 
     for (int j = 0; j < MaxRecentFiles; ++j) {
         if (j < recentFiles.count()) {
-            QString text = tr("&%1 % 2")
-                           .arg(j + 1)
+            QString text = tr("%1")
                            .arg(strippedName(recentFiles[j]));
+            recentFileActions[j]->setText(text);
+            recentFileActions[j]->setData(recentFiles[j]);
+            recentFileActions[j]->setVisible(true);
+
         } else {
             recentFileActions[j]->setVisible(false);
         }
@@ -414,7 +417,6 @@ void MainWindow::updateRecentFileActions()
     }
 }
 
-// Fucking shit
 void MainWindow::find()
 {
     if (!findDialog) {
@@ -443,7 +445,6 @@ void MainWindow::goToCell()
     }
 }
 
-//Here is the problem
 void MainWindow::sort()
 {
     ExtensionDialog dialog(this);

@@ -239,7 +239,6 @@ void Spreadsheet::findNext(const QString& str, Qt::CaseSensitivity cs)
     QApplication::beep();
 }
 
-// Fucking shit
 void Spreadsheet::findPrevious(const QString &str, Qt::CaseSensitivity cs)
 {
 
