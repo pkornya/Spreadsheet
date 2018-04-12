@@ -424,7 +424,7 @@ void MainWindow::find()
         connect(findDialog, SIGNAL(findNext(const QString&,
                                             Qt::CaseSensitivity)),
                 spreadsheet, SLOT(findNext(const QString&,
-                                           Qt::CaseSensitivit)));
+                                           Qt::CaseSensitivity)));
         connect(findDialog, SIGNAL(findPrevious(const QString&,
                                             Qt::CaseSensitivity)),
                 spreadsheet, SLOT(findPrevious(const QString&,
@@ -432,6 +432,7 @@ void MainWindow::find()
     }
 
     findDialog->show();
+    //findDialog->raise();
     findDialog->activateWindow();
 }
 

@@ -217,8 +217,7 @@ void Spreadsheet::selectCurrentColumn() // OK
     selectColumn(currentColumn());
 }
 
-// Fucking shit
-void Spreadsheet::findNext(const QString& str, Qt::CaseSensitivity cs)
+void Spreadsheet::findNext(const QString& str, Qt::CaseSensitivity cs) // OK
 {
     int row = currentRow();
     int column = currentColumn() + 1;
@@ -230,16 +229,18 @@ void Spreadsheet::findNext(const QString& str, Qt::CaseSensitivity cs)
                 setCurrentCell(row, column);
                 activateWindow();
                 return;
-                }
-                ++column;
-            }
-            column = 0;
-            ++row;
+             }
+             ++column;
+         }
+         column = 0;
+         ++row;
     }
-    QApplication::beep();
+    //QApplication::beep();
+    QMessageBox::warning(this, "Unsuccessful search",
+                         "Could not find anything by your request");
 }
 
-void Spreadsheet::findPrevious(const QString &str, Qt::CaseSensitivity cs)
+void Spreadsheet::findPrevious(const QString &str, Qt::CaseSensitivity cs) // OK
 {
 
     int row = currentRow();
@@ -258,7 +259,9 @@ void Spreadsheet::findPrevious(const QString &str, Qt::CaseSensitivity cs)
         column = ColumnCount - 1;
         --row;
     }
-    QApplication::beep();
+    //QApplication::beep();
+    QMessageBox::warning(this, "Unsuccessful search",
+                         "Could not find anything by your request");
 }
 
 void Spreadsheet::recalculate()
