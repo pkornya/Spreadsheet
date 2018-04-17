@@ -27,22 +27,22 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     finddialog.cpp \
     gotocelldialog.cpp \
-    extensiondialog.cpp \
     spreadsheet.cpp \
-    cell.cpp
+    cell.cpp \
+    sortdialog.cpp
 
 HEADERS  += mainwindow.h \
     finddialog.h \
     gotocelldialog.h \
-    extensiondialog.h \
     spreadsheet.h \
-    cell.h
+    cell.h \
+    sortdialog.h
 
 RESOURCES += \
     resource.qrc
 
 FORMS += \
     gotocelldialog.ui \
-    extensiondialog.ui
+    sortdialog.ui
 
 DISTFILES +=

@@ -293,6 +293,7 @@ void Spreadsheet::sort(const SpreadsheetCompare &compare)
         for (int j = 0; j < range.columnCount(); ++j)
             row.append(formula(range.topRow() + i,
                                range.leftColumn() + j));
+        rows.append(row);
     }
 
     //qStableSort(rows.begin(), rows.end(), compare);

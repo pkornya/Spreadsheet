@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include "finddialog.h"
 #include "gotocelldialog.h"
-#include "extensiondialog.h"
 #include "spreadsheet.h"
+#include "sortdialog.h"
 
 #include <QLabel>
 #include <QAction>
@@ -417,7 +417,7 @@ void MainWindow::updateRecentFileActions()  // OK
     }
 }
 
-void MainWindow::find()
+void MainWindow::find() //OK
 {
     if (!findDialog) {
         findDialog = new FindDialog(this);
@@ -436,7 +436,7 @@ void MainWindow::find()
     findDialog->activateWindow();
 }
 
-void MainWindow::goToCell()
+void MainWindow::goToCell() // OK
 {
     GoToCellDialog dialog(this);
     if (dialog.exec()) {
@@ -448,7 +448,7 @@ void MainWindow::goToCell()
 
 void MainWindow::sort()
 {
-    ExtensionDialog dialog(this);
+    SortDialog dialog(this);
     QTableWidgetSelectionRange range = spreadsheet->selectedRange();
     dialog.setColumnRange('A' + range.leftColumn(),
                           'A' + range.rightColumn());

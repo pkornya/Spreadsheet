@@ -1,6 +1,6 @@
-#include "extensiondialog.h"
+#include "sortdialog.h"
 
-ExtensionDialog::ExtensionDialog(QWidget *parent) :
+SortDialog::SortDialog(QWidget *parent) :
     QDialog(parent)
 {
     setupUi(this);
@@ -11,7 +11,7 @@ ExtensionDialog::ExtensionDialog(QWidget *parent) :
     setColumnRange('A', 'Z');
 }
 
-void ExtensionDialog::setColumnRange(QChar first, QChar last)
+void SortDialog::setColumnRange(QChar first, QChar last)
 {
     primaryColumnCombo->clear();
     secondaryColumnCombo->clear();
@@ -30,4 +30,3 @@ void ExtensionDialog::setColumnRange(QChar first, QChar last)
         ch = ch.unicode() + 1;
     }
 }
-
