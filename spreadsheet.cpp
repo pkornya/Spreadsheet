@@ -264,7 +264,7 @@ void Spreadsheet::findPrevious(const QString &str, Qt::CaseSensitivity cs) // OK
                          "Could not find anything by your request");
 }
 
-void Spreadsheet::recalculate()
+void Spreadsheet::recalculate() // OK
 {
     for (int row = 0; row < RowCount; ++row) {
         for (int column = 0; column < ColumnCount; ++column) {
@@ -275,14 +275,14 @@ void Spreadsheet::recalculate()
     viewport()->update();
 }
 
-void Spreadsheet::setAutoRecalculate(bool recalc)
+void Spreadsheet::setAutoRecalculate(bool recalc)   // OK
 {
     autoRecalc = recalc;
     if (autoRecalc)
         recalculate();
 }
 
-void Spreadsheet::sort(const SpreadsheetCompare &compare)
+void Spreadsheet::sort(const SpreadsheetCompare &compare)   // OK
 {
     QList<QStringList> rows;
     QTableWidgetSelectionRange range = selectedRange();
@@ -296,7 +296,6 @@ void Spreadsheet::sort(const SpreadsheetCompare &compare)
         rows.append(row);
     }
 
-    //qStableSort(rows.begin(), rows.end(), compare);
     std::sort(rows.begin(), rows.end(), compare);
 
     for (i = 0; i < range.rowCount(); ++i) {

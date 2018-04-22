@@ -20,7 +20,7 @@
 #include <QMutableListIterator>
 #include <QDebug>
 
-MainWindow::MainWindow()    //OK
+MainWindow::MainWindow()    // OK
 {
     spreadsheet = new Spreadsheet;
     setCentralWidget(spreadsheet);
@@ -169,7 +169,7 @@ void MainWindow::createActions()    // OK
             this, SLOT(sort()));
 
     autoRecalcAction = new QAction(tr("&Auto-Recalculate"), this);
-    //autoRecalcAction->setCheckable(true);
+    autoRecalcAction->setCheckable(true);
     connect(autoRecalcAction, SIGNAL(triggered(bool)),
             spreadsheet, SLOT(setAutoRecalculate(bool)));
 
@@ -229,6 +229,7 @@ void MainWindow::createContextMenu()    //OK
     spreadsheet->addAction(cutAction);
     spreadsheet->addAction(copyAction);
     spreadsheet->addAction(pasteAction);
+    spreadsheet->addAction(deleteAction);
     spreadsheet->setContextMenuPolicy(Qt::ActionsContextMenu);
 }
 
@@ -417,7 +418,7 @@ void MainWindow::updateRecentFileActions()  // OK
     }
 }
 
-void MainWindow::find() //OK
+void MainWindow::find()     //OK
 {
     if (!findDialog) {
         findDialog = new FindDialog(this);
@@ -432,7 +433,6 @@ void MainWindow::find() //OK
     }
 
     findDialog->show();
-    //findDialog->raise();
     findDialog->activateWindow();
 }
 
@@ -446,7 +446,7 @@ void MainWindow::goToCell() // OK
     }
 }
 
-void MainWindow::sort()
+void MainWindow::sort()     // OK
 {
     SortDialog dialog(this);
     QTableWidgetSelectionRange range = spreadsheet->selectedRange();
@@ -470,7 +470,7 @@ void MainWindow::sort()
     }
 }
 
-void MainWindow::about()
+void MainWindow::about()    // OK
 {
     QMessageBox::about(this, tr("About Spreadsheet"),
             tr("<h2>Spreadsheet 1.1</h2>"
@@ -481,7 +481,7 @@ void MainWindow::about()
             "Qt classes."));
 }
 
-void MainWindow::openRecentFile()
+void MainWindow::openRecentFile()   // OK
 {
     if (okToContinue()) {
         QAction *action = qobject_cast<QAction *>(sender());
@@ -490,7 +490,7 @@ void MainWindow::openRecentFile()
     }
 }
 
-void MainWindow::writeSettings()
+void MainWindow::writeSettings()    // OK
 {
     QSettings settings("Software Inc.", "Spreadsheet");
 
@@ -500,7 +500,7 @@ void MainWindow::writeSettings()
     settings.setValue("autoRecalc", autoRecalcAction->isChecked());
 }
 
-void MainWindow::readSettings()
+void MainWindow::readSettings()     //OK
 {
     QSettings settings("Software Inc.", "Spreadsheet");
 
