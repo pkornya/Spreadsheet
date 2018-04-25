@@ -230,6 +230,7 @@ void MainWindow::createContextMenu()    //OK
     spreadsheet->addAction(copyAction);
     spreadsheet->addAction(pasteAction);
     spreadsheet->addAction(deleteAction);
+    spreadsheet->addAction(sortAction);
     spreadsheet->setContextMenuPolicy(Qt::ActionsContextMenu);
 }
 
