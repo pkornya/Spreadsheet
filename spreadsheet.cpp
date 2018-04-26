@@ -235,7 +235,6 @@ void Spreadsheet::findNext(const QString& str, Qt::CaseSensitivity cs) // OK
          column = 0;
          ++row;
     }
-    //QApplication::beep();
     QMessageBox::warning(this, "Unsuccessful search",
                          "Could not find anything by your request");
 }
@@ -259,7 +258,6 @@ void Spreadsheet::findPrevious(const QString &str, Qt::CaseSensitivity cs) // OK
         column = ColumnCount - 1;
         --row;
     }
-    //QApplication::beep();
     QMessageBox::warning(this, "Unsuccessful search",
                          "Could not find anything by your request");
 }

@@ -295,9 +295,7 @@ void MainWindow::closeEvent(QCloseEvent *event) // OK
 }
 
 void MainWindow::newFile()  // OK
-{
-//    MainWindow *mainWin = new MainWindow;
-//    mainWin->show();
+{   
     (new MainWindow())->show();
 }
 
